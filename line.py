@@ -2,6 +2,8 @@ import cv2
 
 cap = cv2.VideoCapture('video2.mp4')
 
+tresh_config = 150
+
 
 Core_Y = 200
 offset = 1
@@ -30,13 +32,14 @@ def middle(x, y, w, h):
 # cv2.setMouseCallback('video', OnClick)
 
 
+
 while True:
     ret, frame = cap.read()
     roi = cv2.resize(frame, (1000, 600))
     gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (5, 5), 0)
 
-    _, tresh = cv2.threshold(blur, 150, 255, cv2.THRESH_BINARY)
+    _, tresh = cv2.threshold(blur, tresh_config, 255, cv2.THRESH_BINARY)
     # dilated = cv2.dilate(tresh, None, iterations=3)
 
     contours, _ = cv2.findContours(tresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
